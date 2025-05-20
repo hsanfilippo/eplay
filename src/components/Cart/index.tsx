@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from 'react-redux'
+import { RootReducer } from '../../store'
 import Button from '../Button'
 import {
   CartContainer,
@@ -10,11 +12,20 @@ import {
 
 import starWars from '../../assets/images/star_wars.png'
 import Tag from '../Tag'
+import { close } from '../../store/reducers/cart'
 
 const Cart = () => {
+  const { isOpen } = useSelector((state: RootReducer) => state.cart)
+
+  const dispatch = useDispatch()
+
+  const closeCart = () => {
+    dispatch(close())
+  }
+
   return (
-    <CartContainer>
-      <Overlay />
+    <CartContainer className={isOpen ? 'is-open' : ''}>
+      <Overlay onClick={() => closeCart()} />
       <Sidebar>
         <ul>
           <CartItem>
